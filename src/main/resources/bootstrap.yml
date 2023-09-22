@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: dwh-service
+  profiles:
+    active: local
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8088/
+      #label : develop
+      request-read-timeout: 10000
+      username: develop
+      password: YXGxHO83MfZazQ7XBxDCmz78

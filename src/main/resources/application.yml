@@ -1,0 +1,77 @@
+core:
+  logging:
+    exclude-response-body: true
+    ignore-log-uri:
+      - /api/actuator/health
+logging:
+  config: classpath:log4j.xml
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        pushgateway:
+          enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus, metrics
+server:
+  compression:
+    enabled: true
+  error:
+    whitelabel:
+      enabled: false
+  max-http-header-size: 8KB
+  port: 9004
+  servlet:
+    context-path: /api
+  tomcat:
+    accept-count: 100
+    max-connections: 10000
+    threads:
+      max: 200
+spring:
+  application:
+    name: dwh-service
+  datasource:
+    url: jdbc:oracle:thin:@113.190.234.241:1521/orclpdb
+    username: bamc
+    password: 123456
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 30000
+      maxLifetime: 2000000
+      maximumPoolSize: 100
+      minimumIdle: 5
+      poolName: HikariCP
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          batch_size: 1000
+    show-sql: false
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.ssZZ
+    serialization:
+      write_dates_as_timestamps: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui-custom.html
+    operationsSorter: method
+oracle-queue:
+  schema: BAMC
+  queueName: sync_data_queue
